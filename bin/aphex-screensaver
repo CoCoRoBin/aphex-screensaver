@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euo pipefail
+config="$HOME/.config/omarchy/screensavers/org.omarchy.screensaver"
+if [[ $(omarchy-shell lock isLocked 2>/dev/null) == true ]]; then exit 42; fi
+case "${1:-}" in
+  force|--preview) ;;
+  *) if omarchy-toggle-enabled screensaver-off; then exit 0; fi ;;
+esac
+exec quickshell -n -p "$config"
